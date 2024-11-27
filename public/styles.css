@@ -498,11 +498,32 @@ tr:hover td {
     padding: 15px;
     max-width: 1000px;
     margin: 3% auto;
+    max-height: 85vh;
+    overflow-y: auto;
 }
 
-/* Remove scrollbar for upload modal specifically */
+/* Update scrollbar styling for modal content */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+/* Remove the specific overflow hidden for upload modal */
 #fileUploadModal .modal-content {
-    overflow-y: hidden;
+    overflow-y: auto;
 }
 
 /* Keep scrollbar for other modals */
@@ -849,5 +870,69 @@ tr:hover td {
     .btn-delete,
     .btn-logout {
         touch-action: manipulation;
+    }
+}
+
+/* User Actions */
+.user-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-info {
+    padding: 8px 16px;
+    background: #17a2b8;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-info:hover {
+    background: #138496;
+    transform: translateY(-1px);
+}
+
+.status-active {
+    background: #28a745;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+/* User Management Styles */
+.btn-delete-user {
+    padding: 4px 8px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.btn-delete-user:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
+.current-user {
+    color: #6c757d;
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* Add to your responsive styles */
+@media screen and (max-width: 768px) {
+    .btn-delete-user {
+        padding: 6px 12px;
+        width: 100%;
+        text-align: center;
     }
 } 
