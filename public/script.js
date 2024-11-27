@@ -262,7 +262,11 @@ async function handleRegister(event) {
     }
 
     const users = JSON.parse(localStorage.getItem('users') || '[]');
-    users.push({ username, password });
+    users.push({ 
+        username, 
+        password,
+        registrationDate: new Date().toLocaleString()
+    });
     localStorage.setItem('users', JSON.stringify(users));
 
     alert('Registration successful! Please login.');
@@ -278,10 +282,16 @@ function updateFileUploadHeader(username) {
         modalContent.insertBefore(header, modalContent.firstChild);
     }
     
+    // Get all users
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    
     header.innerHTML = `
         <div class="user-info">
             <span>Welcome, ${username}</span>
-            <button onclick="logout()" class="btn-logout">Logout</button>
+            <div class="user-actions">
+                <button onclick="showRegisteredUsers()" class="btn-info">View Users</button>
+                <button onclick="logout()" class="btn-logout">Logout</button>
+            </div>
         </div>
     `;
 }
@@ -385,5 +395,76 @@ async function deleteFile(filename) {
         displayAllFiles();
     }
 
+}
+
+// Add this new function
+function showRegisteredUsers() {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const statsDiv = document.getElementById('basicStats');
+    
+    let tableHTML = `
+        <div class="compact-table">
+            <h2>Registered Uploaders</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    `;
+
+    users.forEach(user => {
+        tableHTML += `
+            <tr>
+                <td>${user.username}</td>
+                <td><span class="status-active">Active</span></td>
+                <td>
+                    ${user.username !== currentUser.username ? 
+                        `<button onclick="deleteUser('${user.username}')" class="btn-delete-user">Delete</button>` : 
+                        '<span class="current-user">Current User</span>'}
+                </td>
+            </tr>
+        `;
+    });
+
+    tableHTML += `
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
+    
+    statsDiv.innerHTML = tableHTML;
+}
+
+// Add this new function
+function deleteUser(username) {
+    if (!confirm(`Are you sure you want to delete user: ${username}?`)) {
+        return;
+    }
+
+    try {
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const updatedUsers = users.filter(user => user.username !== username);
+        localStorage.setItem('users', JSON.stringify(updatedUsers));
+        
+        // Refresh the display
+        showRegisteredUsers();
+        
+        // Show success message
+        document.getElementById('message').innerHTML = `
+            <p class="success">User ${username} deleted successfully</p>
+        `;
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        document.getElementById('message').innerHTML = `
+            <p class="error">Error deleting user: ${error.message}</p>
+        `;
+    }
 }
 
