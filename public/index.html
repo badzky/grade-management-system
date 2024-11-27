@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="landing-container">
+        <h1>Grade Management System</h1>
+        <div class="button-container">
+            <button onclick="openModal('uploadModal')" class="btn">Upload Grades</button>
+            <button onclick="openModal('requestModal')" class="btn">Request Grade</button>
+        </div>
+    </div>
+
+    <!-- Upload Modal (Login/Register) -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('uploadModal')">&times;</span>
+            <div class="modal-tabs">
+                <button onclick="showTab('login')" class="tab-btn active">Login</button>
+                <button onclick="showTab('register')" class="tab-btn">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="login" class="tab-content active">
+                <h2>Welcome Back</h2>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group username">
+                        <input type="text" placeholder="Username" required>
+                    </div>
+                    <div class="form-group password">
+                        <input type="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="login-btn">Login</button>
+                    <div class="form-switch">
+                        Don't have an account? <a href="#" onclick="showTab('register')">Register</a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register" class="tab-content">
+                <h2>Create Account</h2>
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="form-group username">
+                        <input type="text" placeholder="Username" required>
+                    </div>
+                    <div class="form-group password">
+                        <input type="password" placeholder="Password" required>
+                    </div>
+                    <div class="form-group admin-code">
+                        <input type="text" placeholder="Administrative Code" required>
+                    </div>
+                    <button type="submit" class="register-btn">Register</button>
+                    <div class="form-switch">
+                        Already have an account? <a href="#" onclick="showTab('login')">Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Grade Modal -->
+    <div id="requestModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('requestModal')">&times;</span>
+            <h2>Request Grade</h2>
+            <div class="search-section">
+                <input type="text" id="searchInput" placeholder="Enter Student Number...">
+                <button onclick="searchStudent()" class="btn">Search</button>
+                <button onclick="clearSearch()" class="btn btn-secondary">Clear</button>
+            </div>
+            <div id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- File Upload Modal -->
+    <div id="fileUploadModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('fileUploadModal')">&times;</span>
+            <div class="modal-header"></div>
+            <h2>Upload Grade File</h2>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" id="fileInput" name="file" accept=".xlsx, .xls" />
+                <button type="submit" class="btn">Upload & Display</button>
+            </form>
+            <div id="message" class="message"></div>
+            <div id="basicStats"></div>
+        </div>
+    </div>
+
+    <!-- Required Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
