@@ -468,3 +468,17 @@ function deleteUser(username) {
     }
 }
 
+// Add this new function
+function clearSearch() {
+    // Clear the search input
+    document.getElementById('searchInput').value = '';
+    // Clear the search results
+    document.getElementById('searchResults').innerHTML = '';
+    // Optional: Add a message when cleared
+    document.getElementById('searchResults').innerHTML = '<p class="info">Search cleared</p>';
+    // Remove the message after 2 seconds
+    setTimeout(() => {
+        document.getElementById('searchResults').innerHTML = '';
+    }, 2000);
+}
+
